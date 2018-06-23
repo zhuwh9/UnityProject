@@ -22,7 +22,7 @@
 
 ### 展示效果
 
-![](https://github.com/zhuwh9/UnityProject/blob/master/Survival Shooter/Images/survival_shooter.png?raw=true)
+![](https://github.com/zhuwh9/UnityProject/blob/master/SurvivalShooter/Images/survival_shooter.png?raw=true)
 
 ### Pre-built Version
 
