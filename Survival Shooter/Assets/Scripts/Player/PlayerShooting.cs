@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -31,8 +32,8 @@ public class PlayerShooting : MonoBehaviour
     void Update ()
     {
         timer += Time.deltaTime;
-
-		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
+		bool isFire = (CrossPlatformInputManager.GetAxisRaw ("Horizontal1") != 0.0f) || (CrossPlatformInputManager.GetAxisRaw ("Vertical1") != 0.0f);
+		if(isFire && timer >= timeBetweenBullets && Time.timeScale != 0)//Input.GetButton ("Fire1")
         {
             Shoot ();
         }

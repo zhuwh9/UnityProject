@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,11 +20,15 @@ public class PlayerMovement : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		float h = Input.GetAxisRaw ("Horizontal");
-		float v = Input.GetAxisRaw ("Vertical");
+//		float h = Input.GetAxisRaw ("Horizontal");
+//		float v = Input.GetAxisRaw ("Vertical");
+		float h = CrossPlatformInputManager.GetAxisRaw ("Horizontal");
+		float v = CrossPlatformInputManager.GetAxisRaw ("Vertical");
+		float h1 = CrossPlatformInputManager.GetAxisRaw ("Horizontal1");
+		float v1 = CrossPlatformInputManager.GetAxisRaw ("Vertical1");
 
 		Move (h, v);
-		Turning ();
+		Turning (h1, v1);
 		Animating (h, v);
 	}
 
@@ -34,21 +39,30 @@ public class PlayerMovement : MonoBehaviour
 		playerRigidbody.MovePosition (transform.position + movement);
 	}
 
-	void Turning()
+	void Turning(float h, float v)
 	{
-		Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
-
-		RaycastHit floorHit;
-
-		if (Physics.Raycast (camRay, out floorHit, camRayLength, floorMask)) 
-		{
-			Vector3 playerToMouse = floorHit.point - transform.position;
-			playerToMouse.y = 0f;
-
-			Quaternion newRotation = Quaternion.LookRotation (playerToMouse);
-			playerRigidbody.MoveRotation (newRotation);
-		}
+		Vector3 orientation = new Vector3 (h, 0.0f, v);
+		orientation = orientation.normalized;
+		Quaternion newRotation = Quaternion.LookRotation (orientation);
+		playerRigidbody.MoveRotation (newRotation);
 	}
+
+	// this is for PC platform
+//	void Turning()
+//	{
+//		Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
+//
+//		RaycastHit floorHit;
+//
+//		if (Physics.Raycast (camRay, out floorHit, camRayLength, floorMask)) 
+//		{
+//			Vector3 playerToMouse = floorHit.point - transform.position;
+//			playerToMouse.y = 0f;
+//
+//			Quaternion newRotation = Quaternion.LookRotation (playerToMouse);
+//			playerRigidbody.MoveRotation (newRotation);
+//		}
+//	}
 
 	void Animating(float h, float v)
 	{
